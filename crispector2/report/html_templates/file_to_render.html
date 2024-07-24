@@ -1,0 +1,406 @@
+{% extends 'final_layout.html' %}
+
+{% block crispector_logo %}
+		{{exp_param_d.logo_path}}
+{% endblock %}
+
+{% block experiment_title %}
+		{{exp_param_d.page_title}}{{exp_param_d.page_title}}
+{% endblock %}
+
+{% block edit_section_title %}
+		{{exp_param_d.edit_section.title}}
+{% endblock %}
+
+{% block edit_section_editing_activity_title %}
+	<ul class="nav nav-tabs flex-wrap:nowrap" id="myTab" role="tablist">
+	    {% if exp_param_d.edit_section.editing_activity_all and exp_param_d.edit_section.editing_activity_allele_only %}
+			<li class="nav-item">
+				<a class="nav-link active" id="edit_section_editing_activity_all_tab" data-toggle="tab" href="#edit_section_editing_activity_all" role="tab" aria-controls="" aria-selected="true">{{exp_param_d.edit_section.editing_activity_all.title}}</a>
+			</li>
+		    <li class="nav-item">
+				<a class="nav-link" id="edit_section_editing_activity_tab" data-toggle="tab" href="#edit_section_editing_activity" role="tab" aria-controls="" aria-selected="false">{{exp_param_d.edit_section.editing_activity.title}}</a>
+	  		</li>
+		    <li class="nav-item">
+			    <a class="nav-link" id="edit_section_editing_allele_only_activity_tab" data-toggle="tab" href="#edit_section_editing_activity_allele_only" role="tab" aria-controls="" aria-selected="false">{{exp_param_d.edit_section.editing_activity_allele_only.title}}</a>
+		    </li>
+		    <li class="nav-item">
+		        <a class="nav-link" id="edit_section_result_table_tab" data-toggle="tab" href="#edit_section_result_table" role="tab" aria-controls="mapping_per_site" aria-selected="false">{{exp_param_d.edit_section.result_table.title}}</a>
+	        </li>
+		{% else %}
+		    <li class="nav-item">
+				<a class="nav-link active" id="edit_section_editing_activity_tab" data-toggle="tab" href="#edit_section_editing_activity" role="tab" aria-controls="" aria-selected="false">{{exp_param_d.edit_section.editing_activity.title}}</a>
+	  		</li>
+		    <li class="nav-item">
+		        <a class="nav-link" id="edit_section_result_table_tab" data-toggle="tab" href="#edit_section_result_table" role="tab" aria-controls="mapping_per_site" aria-selected="false">{{exp_param_d.edit_section.result_table.title}}</a>
+	        </li>
+		{% endif %}
+    </ul>
+{% endblock %}
+
+{% block edit_section_editing_activity_plot_path %}
+    {% if exp_param_d.edit_section.editing_activity_all and exp_param_d.edit_section.editing_activity_allele_only %}
+        <div class="tab-pane active" id="edit_section_editing_activity_all" role="tabpanel" aria-labelledby="edit_section_editing_activity_all">
+			<a href="{{exp_param_d.edit_section.editing_activity_all.pdf_path}}"><img src="{{exp_param_d.edit_section.editing_activity_all.plot_path}}" width={{exp_param_d.edit_section.editing_activity_all.width}}></a>
+		</div>
+		<div class="tab-pane" id="edit_section_editing_activity" role="tabpanel" aria-labelledby="edit_section_editing_activity">
+			<a href="{{exp_param_d.edit_section.editing_activity.pdf_path}}"><img src="{{exp_param_d.edit_section.editing_activity.plot_path}}" width={{exp_param_d.edit_section.editing_activity.width}}></a>
+		</div>
+        <div class="tab-pane" id="edit_section_editing_activity_allele_only" role="tabpanel" aria-labelledby="edit_section_editing_activity_all">
+			<a href="{{exp_param_d.edit_section.editing_activity_allele_only.pdf_path}}"><img src="{{exp_param_d.edit_section.editing_activity_allele_only.plot_path}}" width={{exp_param_d.edit_section.editing_activity_allele_only.width}}></a>
+		</div>
+        <div class="tab-pane" id="edit_section_result_table" role="tabpanel" aria-labelledby="edit_section_result_table">
+			<div class="table-responsive">
+			  <table class="table table-hover table-sm">
+				{{edit_section_result_table_html}}
+			  </table>
+			</div>
+			<br></br>
+		</div>
+    {% else %}
+        <div class="tab-pane active" id="edit_section_editing_activity" role="tabpanel" aria-labelledby="edit_section_editing_activity">
+			<a href="{{exp_param_d.edit_section.editing_activity.pdf_path}}"><img src="{{exp_param_d.edit_section.editing_activity.plot_path}}" width={{exp_param_d.edit_section.editing_activity.width}}></a>
+		</div>
+        <div class="tab-pane" id="edit_section_result_table" role="tabpanel" aria-labelledby="edit_section_result_table">
+			<div class="table-responsive">
+			  <table class="table table-hover table-sm">
+				{{edit_section_result_table_html}}
+			  </table>
+			</div>
+			<br></br>
+		</div>
+    {% endif %}
+{% endblock %}
+
+{% block translocations_menu %}
+	{% if exp_param_d.translocations.title != '' %}
+	<br>
+	<li class="nav-item">
+		<a class="nav-link" href="#translocations">Translocations</a>
+	 </li>
+	{% endif %}	
+{% endblock translocations_menu %}
+
+{% block translocations %}
+	{% if exp_param_d.translocations.title != '' %}
+	<div>
+		<br></br>
+	</div>
+	<div class="row justify-content-center">
+        <div class="col-lg-12">
+          <div class="card text-center">
+			<li class="list-group-item">
+				<div id="translocations" class="card-header">
+					<h5 style="text-align:center">{{exp_param_d.translocations.title}}</h5>
+				</div>
+				<div class="card-body">
+			
+	{% endif %}	
+
+			{% if exp_param_d.translocations.translocations_heatmap_tab != '' and exp_param_d.translocations.translocations_results_tab != ''%}
+				<ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+					<li class="nav-item">
+				  	<a class="nav-link active" id="heatmap_tab" data-toggle="tab" href="#heatmap" role="tab" aria-controls="" aria-selected="true">{{exp_param_d.translocations.translocations_heatmap_tab.title}}</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="mapping_stats-tab" data-toggle="tab" href="#result_table" role="tab" aria-controls="" aria-selected="true">{{exp_param_d.translocations.translocations_results_tab.title}}</a>
+						</li>
+				</ul>
+			{% endif %}
+
+			{% if exp_param_d.translocations.translocations_heatmap_tab != '' and exp_param_d.translocations.translocations_results_tab == ''%}
+				<ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">		
+					<li class="nav-item">
+				  	<a class="nav-link active" id="heatmap_tab" data-toggle="tab" href="#heatmap" role="tab" aria-controls="" aria-selected="true">{{exp_param_d.translocations.translocations_heatmap_tab.title}}</a>
+					</li>
+				</ul>
+			{% endif %}
+
+			{% if exp_param_d.translocations.translocations_heatmap_tab == '' and exp_param_d.translocations.translocations_results_tab != ''%}
+				<ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">		
+					<li class="nav-item">
+						<a class="nav-link active" id="mapping_stats-tab" data-toggle="tab" href="#result_table" role="tab" aria-controls="" aria-selected="true">{{exp_param_d.translocations.translocations_results_tab.title}}</a>
+						</li>
+				</ul>
+			{% endif %}
+
+			{% if exp_param_d.translocations.translocations_heatmap_tab == '' and exp_param_d.translocations.translocations_results_tab == ''%}
+				
+			{% endif %}
+
+				<div class="tab-content" id="myTabContent">
+			{% if exp_param_d.translocations.translocations_heatmap_tab == '' and exp_param_d.translocations.translocations_results_tab == ''%}
+				<table style="width:100%">
+					<tr>
+					<th>
+						{% if exp_param_d.translocations.tx_translocations_path != '' %}
+							<form method="get" action="{{exp_param_d.translocations.tx_translocations_path}}">
+								<button type="submit" style="width:80%; height:20%" class="btn btn-primary">Treatment reads with primer inconsistency</button>
+							</form>
+						{% else %}
+							<button type="button" style="width:80%; height:20%; color:gray" class="btn btn-light">Treatment reads with primer inconsistency</button>
+						{% endif %}
+					</th>
+					<th>
+						{% if exp_param_d.translocations.mock_translocations_path != '' %}
+							<form method="get" action="{{exp_param_d.translocations.mock_translocations_path}}">
+								<button type="submit" style="width:80%; height:20%" class="btn btn-primary">Mock reads with primer inconsistency</button>
+							</form>
+						{% else %}
+							<button type="button" style="width:80%; height:20%; color:gray" class="btn btn-light">Mock reads with primer inconsistency</button>
+						{% endif %}
+					</th>
+					</tr>
+				</table>
+				<p>
+					<br>
+				</p>
+				</div>
+			{% endif %}
+
+			{% if exp_param_d.translocations.translocations_heatmap_tab != '' and exp_param_d.translocations.translocations_results_tab == '' %}	
+					<div class="tab-pane fade show active" id="heatmap" role="tabpanel" aria-labelledby="mapping_stats-tab">
+				  		<a href="{{exp_param_d.translocations.translocations_heatmap_tab.pdf_path}}"><img src="{{exp_param_d.translocations.translocations_heatmap_tab.plot_path}}" width="{{exp_param_d.translocations.translocations_heatmap_tab.width}}" ></a>
+						  <table style="width:100%">
+							<tr>
+							<th>
+								{% if exp_param_d.translocations.tx_translocations_path != '' %}
+									<form method="get" action="{{exp_param_d.translocations.tx_translocations_path}}">
+										<button type="submit" style="width:80%; height:20%" class="btn btn-primary">Treatment reads with primer inconsistency</button>
+									</form>
+								{% else %}
+									<button type="button" style="width:80%; height:20%; color:gray" class="btn btn-light">Treatment reads with primer inconsistency</button>
+								{% endif %}
+							</th>
+							<th>
+								{% if exp_param_d.translocations.mock_translocations_path != '' %}
+									<form method="get" action="{{exp_param_d.translocations.mock_translocations_path}}">
+										<button type="submit" style="width:80%; height:20%" class="btn btn-primary">Mock reads with primer inconsistency</button>
+									</form>
+								{% else %}
+									<button type="button" style="width:80%; height:20%; color:gray" class="btn btn-light">Mock reads with primer inconsistency</button>
+								{% endif %}
+							</th>
+							</tr>
+						</table>
+						<p>
+							<br>
+						</p>
+					</div>
+						
+			{% endif %}
+
+			{% if exp_param_d.translocations.translocations_heatmap_tab != '' and exp_param_d.translocations.translocations_results_tab != '' %}	
+					<div class="tab-pane fade show active" id="heatmap" role="tabpanel" aria-labelledby="mapping_stats-tab">
+				  		<a href="{{exp_param_d.translocations.translocations_heatmap_tab.pdf_path}}"><img src="{{exp_param_d.translocations.translocations_heatmap_tab.plot_path}}" width="{{exp_param_d.translocations.translocations_heatmap_tab.width}}" ></a>
+						  <table style="width:100%">
+							<tr>
+							<th>
+								{% if exp_param_d.translocations.tx_translocations_path != '' %}
+									<form method="get" action="{{exp_param_d.translocations.tx_translocations_path}}">
+										<button type="submit" style="width:80%; height:20%" class="btn btn-primary">Treatment reads with primer inconsistency</button>
+									</form>
+								{% else %}
+									<button type="button" style="width:80%; height:20%; color:gray" class="btn btn-light">Treatment reads with primer inconsistency</button>
+								{% endif %}
+							</th>
+							<th>
+								{% if exp_param_d.translocations.mock_translocations_path != '' %}
+									<form method="get" action="{{exp_param_d.translocations.mock_translocations_path}}">
+										<button type="submit" style="width:80%; height:20%" class="btn btn-primary">Mock reads with primer inconsistency</button>
+									</form>
+								{% else %}
+									<button type="button" style="width:80%; height:20%; color:gray" class="btn btn-light">Mock reads with primer inconsistency</button>
+								{% endif %}
+							</th>
+							</tr>
+						</table>
+						<p>
+							<br>
+						</p>
+						
+					</div>
+
+					<div class="tab-pane fade show" id="result_table" role="tabpanel" aria-labelledby="">
+						<table class="table table-hover">
+							  {{translocations_trans_res_tab_tab_data_html}}
+						</table>
+						<table style="width:100%">
+							<tr>
+							<th>
+								{% if exp_param_d.translocations.tx_translocations_path != '' %}
+									<form method="get" action="{{exp_param_d.translocations.tx_translocations_path}}">
+										<button type="submit" style="width:80%; height:20%" class="btn btn-primary">Treatment reads with primer inconsistency</button>
+									</form>
+								{% else %}
+									<button type="button" style="width:80%; height:20%; color:gray" class="btn btn-light">Treatment reads with primer inconsistency</button>
+								{% endif %}
+							</th>
+							<th>
+								{% if exp_param_d.translocations.mock_translocations_path != '' %}
+									<form method="get" action="{{exp_param_d.translocations.mock_translocations_path}}">
+										<button type="submit" style="width:80%; height:20%" class="btn btn-primary">Mock reads with primer inconsistency</button>
+									</form>
+								{% else %}
+									<button type="button" style="width:80%; height:20%; color:gray" class="btn btn-light">Mock reads with primer inconsistency</button>
+								{% endif %}
+							</th>
+							</tr>
+						</table>
+						<p>
+							<br>
+						</p>
+						</div>
+						
+			{% endif %}
+
+			{% if exp_param_d.translocations.translocations_heatmap_tab == '' and exp_param_d.translocations.translocations_results_tab != "" %}
+				<div class="tab-pane fade show active" id="result_table" role="tabpanel" aria-labelledby="">
+					<table class="table table-hover">
+				  		{{translocations_trans_res_tab_tab_data_html}}
+					</table>
+					<table style="width:100%">
+						<tr>
+						<th>
+							{% if exp_param_d.translocations.tx_translocations_path != '' %}
+								<form method="get" action="{{exp_param_d.translocations.tx_translocations_path}}">
+									<button type="submit" style="width:80%; height:20%" class="btn btn-primary">Treatment reads with primer inconsistency</button>
+								</form>
+							{% else %}
+								<button type="button" style="width:80%; height:20%; color:gray" class="btn btn-light">Treatment reads with primer inconsistency</button>
+							{% endif %}
+						</th>
+						<th>
+							{% if exp_param_d.translocations.mock_translocations_path != '' %}
+								<form method="get" action="{{exp_param_d.translocations.mock_translocations_path}}">
+									<button type="submit" style="width:80%; height:20%" class="btn btn-primary">Mock reads with primer inconsistency</button>
+								</form>
+							{% else %}
+								<button type="button" style="width:80%; height:20%; color:gray" class="btn btn-light">Mock reads with primer inconsistency</button>
+							{% endif %}
+						</th>
+						</tr>
+					</table>
+					<p>
+						<br>
+					</p>
+					</div>
+			{% endif %}		
+				</li>
+			</div>	  
+		</div>
+	</div>
+  	 
+{% endblock translocations %}
+
+
+{% block reading_stats_title %}
+		{{exp_param_d.reading_statistics.title}}
+{% endblock %}
+
+{% block reading_stats_mapping_stats_title %}
+		{{exp_param_d.reading_statistics.mapping_stats.title}}
+{% endblock %}
+
+{% block reading_stats_mapping_stats_plot_path %}
+		{{exp_param_d.reading_statistics.mapping_stats.plot_path}}
+{% endblock %}
+
+{% block reading_stats_mapping_stats_pdf_path %}
+		{{exp_param_d.reading_statistics.mapping_stats.pdf_path}}
+{% endblock %}
+
+{% block reading_stats_mapping_per_site_title %}
+		{{exp_param_d.reading_statistics.mapping_per_site.title}}
+{% endblock %}
+
+{% block reading_stats_mapping_per_site_plot_path %}
+		{{exp_param_d.reading_statistics.mapping_per_site.plot_path}}
+{% endblock %}
+
+{% block reading_stats_mapping_per_site_pdf_path %}
+		{{exp_param_d.reading_statistics.mapping_per_site.pdf_path}}
+{% endblock %}
+
+{% block reading_stats_discarded_sites %}
+	{% if reading_stats_discarded_sites != '' %}
+		{{exp_param_d.reading_statistics.discarded_sites}}
+	{% endif %}
+{% endblock reading_stats_discarded_sites %}
+
+{% block reading_stats_fastp %}
+		<table style="width:100%">
+			<tr>
+			  <th>
+				{% if exp_param_d.reading_statistics.fastp_tx_path != '' %}
+				  <form method="get" action="{{exp_param_d.reading_statistics.fastp_tx_path}}">
+					<button type="submit" style="width:80%; height:20%" class="btn btn-primary">Treatment fastp report</button>
+				  </form>
+				{% else %}
+				  <button type="button" style="width:80%; height:20%; color:gray" class="btn btn-light">Treatment fastp report</button>
+				{% endif %}
+			  </th>
+			  <th>
+				{% if exp_param_d.reading_statistics.fastp_mock_path != '' %}
+				  <form method="get" action="{{exp_param_d.reading_statistics.fastp_mock_path}}">
+					<button type="submit" style="width:80%; height:20%" class="btn btn-primary">Mock fastp report</button>
+				  </form>
+				{% else %}
+				  <button type="button" style="width:80%; height:20%; color:gray" class="btn btn-light">Mock fastp report</button>
+				{% endif %}
+				</th>
+			</tr>
+			<tr>
+			  <th>
+				{% if exp_param_d.reading_statistics.unmatched_tx_path != '' %}
+				  <form method="get" action="{{exp_param_d.reading_statistics.unmatched_tx_path}}">
+					<button type="submit" style="width:80%; height:20%" class="btn btn-primary">Treatment unassigned reads</button>
+				  </form>
+				{% else %}
+				  <button type="button" style="width:80%; height:20%; color:gray" class="btn btn-light">Treatment unassigned reads</button>
+				{% endif %}
+			  </th>
+			  <th>
+				{% if exp_param_d.reading_statistics.unmatched_mock_path != '' %}
+				  <form method="get" action="{{exp_param_d.reading_statistics.unmatched_mock_path}}">
+					<button type="submit" style="width:80%; height:20%" class="btn btn-primary">   Mock unassigned reads   </button>
+				  </form>
+				{% else %}
+				  <button type="button" style="width:80%; height:20%; color:gray" class="btn btn-light">   Mock unassigned reads   </button>
+				{% endif %}
+				</th>
+			</tr>
+		</table>
+{% endblock reading_stats_fastp %}
+
+{% block reading_stats_fastp_tx_text %}
+	{% if exp_param_d.reading_statistics.fastp_tx_text != '' %}
+		{{exp_param_d.reading_statistics.fastp_tx_text}}
+	{% endif %}
+{% endblock reading_stats_fastp_tx_text %}
+
+{% block reading_stats_fastp_mock_text %}
+	{% if exp_param_d.reading_statistics.fastp_mock_text != '' %}
+		{{exp_param_d.reading_statistics.fastp_mock_text}}
+	{% endif %}
+{% endblock reading_stats_fastp_mock_text %}
+
+{% block site_name_menu %}
+	{% for site in exp_param_d.html_sites.sites_name_list -%}
+	<li><a href="#{{ site }}">{{ site }}</a></li>
+	{% endfor %}
+{% endblock %}
+
+{% block site_name %}
+	{% for site in exp_param_d.html_sites.sites_name_list -%}
+            <li class="list-group-item" style="text-align: center;">
+            <div id="{{ site }}">         
+                    <a href="{{exp_param_d['html_sites'][site]['report_path']}}" style="text-align: center;">{{ site }}</a>
+            </div>
+            </li>
+	{% endfor %}
+{% endblock %}
+
+{% block log_path %}
+		{{exp_param_d.log_path}}
+{% endblock %}
