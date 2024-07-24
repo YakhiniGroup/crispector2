@@ -1,0 +1,139 @@
+alignment:
+    # Default is no substitution_matrix, can use any substitution_matrix from (substitution_matrices from Bio.Align)
+    # e.g. substitution_matrix: "blosum62"
+    substitution_matrix: ""
+    match_score: 5 # match score. 5 is EMBOSS needle default
+    mismatch_score: -4 # mismatch score. -4 is EMBOSS needle default
+    open_gap_score: -25 # open_gap_score score. -10 is EMBOSS needle default
+    extend_gap_score: 0 # extend_gap_score score. -0.5 is EMBOSS needle default
+global_strict_alignment:
+    # global strict (no gap opening) alignment for allele case
+    mode: 'global'
+    match_score: 5
+    mismatch_score: 0
+    open_gap_score: -100
+    extend_gap_score: -100
+    target_end_gap_score: 0.0
+    query_end_gap_score: 0.0
+local_strict_alignment:
+    # local strict (no gap opening) alignment for allele case
+    mode: 'local'
+    match_score: 5
+    mismatch_score: 1
+    open_gap_score: -100
+    extend_gap_score: -100
+    target_end_gap_score: 0.0
+    query_end_gap_score: 0.0
+local_loose_alignment:
+    # local loose (tend more towards opening gaps) alignment for allele case
+    mode: 'local'
+    match_score: 5
+    mismatch_score: -4
+    open_gap_score: -10
+    extend_gap_score: 0
+    target_end_gap_score: 0.0
+    query_end_gap_score: 0.0
+NHEJ_inference:
+    max_indel_size: &max_indel_size 500 # Max indel size, 500 is account as "infinity"
+    window_size: 10 # Priors size should be 2*window_size for deletions & substitutions a 2*window_size+1 for insertions
+    default_q: 0.93 # the probability of an indel to occur through an edit event if user specifies --override_noise_estimation
+    IndelTypes:
+        Deletions:
+            del_len_1:
+                min: 1 # min indel length
+                max: 1 # max indel length
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.5, 0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
+            del_len_2:
+                min: 2
+                max: 2
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.5, 0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
+            del_len_3:
+                min: 3
+                max: 3
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.5, 0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
+            del_len_4:
+                min: 4
+                max: 4
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.5, 0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
+            del_len_5:
+                min: 5
+                max: 5
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.5, 0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
+            del_len_6_to_max:
+                min: 6
+                max: *max_indel_size
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.5, 0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
+        Insertions:
+            ins_len_1:
+                min: 1
+                max: 1
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
+            ins_len_2:
+                min: 2
+                max: 2
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
+            ins_len_3:
+                min: 3
+                max: 3
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
+            ins_len_4:
+                min: 4
+                max: 4
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
+            ins_len_5:
+                min: 5
+                max: 5
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
+            ins_len_6_to_max:
+                min: 6
+                max: *max_indel_size
+                pos_prior: [0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.1, 0.5,
+                            0.1, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001]
+        Substitutions:
+            sub:
+                min: 1
+                max: *max_indel_size
+                pos_prior: [0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.01,
+                            0.01, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001]
+        Mixed: # Any combination of adjacent insertion, deletion and/or Substitution
+            mixed_len_1:
+                min: 1
+                max: 1
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.5, 0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
+            mixed_len_2:
+                min: 2
+                max: 2
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.5, 0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
+            mixed_len_3:
+                min: 3
+                max: 3
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.5, 0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
+            mixed_len_4:
+                min: 4
+                max: 4
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.5, 0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
+            mixed_len_5:
+                min: 5
+                max: 5
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.5, 0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
+            mixed_len_6_to_max:
+                min: 6
+                max: *max_indel_size
+                pos_prior: [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.001, 0.1, 0.5,
+                            0.5, 0.1, 0.001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001]
