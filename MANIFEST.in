@@ -1,0 +1,2 @@
+include crispector2/config/*.yml
+include crispector2/report/html_templates/*
